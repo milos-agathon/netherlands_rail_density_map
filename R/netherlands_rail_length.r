@@ -55,13 +55,13 @@ int$len_m <- as.numeric(as.character(int$len_m))
 int$Code <- as.character(int$Code)
 ii <- ddply(int, "Code", summarise, lr_m = sum(len_m, na.rm = TRUE))
 
-# join be and int
+# join nl and ii
 df <- merge(nl, ii, by='Code', all.x=T)
 
-# we already have area var but let's see how to calculate on our own
+# compute land area size in square kilometers
 df$area_sqkm <- area(df) / 1000000
 
-# rail density: km or rail / 10 square km
+# rail density: km or rail / 100 square km
 df$rail_dens <- (df$lr_m/1000) / df$area_sqkm * 100
 
 # place back in sf object for mapping
